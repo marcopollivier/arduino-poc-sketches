@@ -1,33 +1,45 @@
-boolean pedestre = true;
+const int PIN_LED_VERDE = 8;
+const int PIN_LED_AMARELO = 9;
+const int PIN_LED_VERMELHO = 10;
+
+const int PIN_BOTAO = 2;
+
+boolean pedestre = false;
+
+int buttonState = 0;
 
 void setup() {
-  pinMode(10, OUTPUT);
-  pinMode(11, OUTPUT);
-  pinMode(12, OUTPUT);
+  pinMode(PIN_BOTAO, INPUT);
+
+  pinMode(PIN_LED_VERDE, OUTPUT);
+  pinMode(PIN_LED_AMARELO, OUTPUT);
+  pinMode(PIN_LED_VERMELHO, OUTPUT);
 }
 
 void loop() {
-  
-  digitalWrite(10, HIGH);
 
-  if(pedestre) {
-    fecharSinal();  
+  buttonState = digitalRead(PIN_BOTAO);
+
+  if (buttonState == HIGH) {
+    
+    digitalWrite(PIN_LED_VERMELHO, HIGH);
+  
+  } else {
+    digitalWrite(PIN_LED_VERMELHO, LOW);
   }
 
 }
 
 void fecharSinal() {
-  digitalWrite(10, HIGH);
-  delay(5000);
-  digitalWrite(10, LOW);
-
-  digitalWrite(11, HIGH);
-  delay(2000);
-  digitalWrite(11, LOW);
-
-
-  digitalWrite(12, HIGH);
-  delay(6000);
-  digitalWrite(12, LOW);
+  ligaDesliga(PIN_LED_VERDE, 500);
+  ligaDesliga(PIN_LED_AMARELO, 200);
+  ligaDesliga(PIN_LED_VERMELHO, 600);
 }
+
+void ligaDesliga(int pin, int timeDelay) {
+  digitalWrite(pin, HIGH);
+  delay(timeDelay);
+  digitalWrite(pin, LOW);
+}
+
 
